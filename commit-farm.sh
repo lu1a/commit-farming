@@ -4,7 +4,7 @@
 
 ENVIRONMENT="PRODUCTION" # "DEVELOPMENT"
 REPO_NAME="commit-farming"
-REPO_FOLDER="/root/$REPO_NAME"
+REPO_FOLDER="/Users/lewistorrington/Repositories/personal/$REPO_NAME"
 
 RANDOM_COMMIT_MSG=""
 
