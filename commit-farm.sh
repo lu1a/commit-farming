@@ -6,6 +6,36 @@ ENVIRONMENT="PRODUCTION" # "PRODUCTION"
 REPO_NAME="commit-farming"
 REPO_FOLDER="/Users/lewistorrington/Repositories/personal/$REPO_NAME"
 
+RANDOM_COMMIT_MSG=""
+
+exit_if_time_during_sleeping_hours() {
+    current_hour=$(date +%H)
+
+    # Check if the current hour is between 23:00 and 09:00
+    if [[ "$current_hour" -ge 23 || "$current_hour" -lt 9 ]]; then
+        echo "Current time is between 23:00 and 09:00. Exiting the script."
+        exit 1  # Exit with a non-zero status to indicate an error or abnormal termination
+    fi
+    echo "Current time is outside the range of 23:00 to 09:00. Continuing with the script."
+}
+
+generate_random_commit_msg() {
+    git_actions=("fix:" "feat:" "chore:" "refactor:")
+    subjects=("Lewis" "The cat" "My friend" "The weather" "A bird" "She" "He")
+    verbs=("runs" "plays" "eats" "loves" "reads" "jumps around" "programs" "coded")
+    objects=("the ball" "in the park" "a book" "every day" "with enthusiasm" "unapologetically")
+
+    # Function to pick a random element from an array
+    pick_random_element() {
+        local array=("$@")
+        local random_index=$((RANDOM % ${#array[@]}))
+        echo "${array[random_index]}"
+    }
+
+    # Generate a random English-like sentence
+    RANDOM_COMMIT_MSG="$(pick_random_element "${git_actions[@]}") $(pick_random_element "${subjects[@]}") $(pick_random_element "${verbs[@]}") $(pick_random_element "${objects[@]}")"
+}
+
 generate_random_text() {
     openssl rand -base64 15 | tr -dc 'a-zA-Z0-9' | head -c 10
 }
@@ -48,6 +78,9 @@ delete_random_payload_file() {
     echo "File '$random_file' deleted."
 }
 
+exit_if_time_during_sleeping_hours
+generate_random_commit_msg
+
 # Randomly choose between creating a new payload file or deleting an existing one
 random_action=$((RANDOM % 2))
 if [ "$random_action" -eq 0 ]; then
@@ -56,24 +89,9 @@ else
     delete_random_payload_file
 fi
 
-git_actions=("fix:" "feat:" "chore:" "refactor:")
-subjects=("Lewis" "The cat" "My friend" "The weather" "A bird" "She" "He")
-verbs=("runs" "plays" "eats" "loves" "reads" "jumps around" "programs" "coded")
-objects=("the ball" "in the park" "a book" "every day" "with enthusiasm" "unapologetically")
-
-# Function to pick a random element from an array
-pick_random_element() {
-    local array=("$@")
-    local random_index=$((RANDOM % ${#array[@]}))
-    echo "${array[random_index]}"
-}
-
-# Generate a random English-like sentence
-random_commit_msg="$(pick_random_element "${git_actions[@]}") $(pick_random_element "${subjects[@]}") $(pick_random_element "${verbs[@]}") $(pick_random_element "${objects[@]}")"
-
 if [ "$ENVIRONMENT" == "PRODUCTION" ]; then
     git -C $REPO_FOLDER add -A
-    git -C $REPO_FOLDER commit -a -m "$random_commit_msg"
+    git -C $REPO_FOLDER commit -a -m "$RANDOM_COMMIT_MSG"
     git -C $REPO_FOLDER push
 else
     echo "$random_commit_msg"
