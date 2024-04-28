@@ -2,7 +2,7 @@
 
 # TO BE RUN VIA CRON
 
-ENVIRONMENT="PRODUCTION" # "PRODUCTION"
+ENVIRONMENT="PRODUCTION" # "DEVELOPMENT"
 REPO_NAME="commit-farming"
 REPO_FOLDER="/root/$REPO_NAME"
 
@@ -14,7 +14,17 @@ exit_if_time_during_sleeping_hours() {
     # Check if the current hour is between 23:00 and 09:00
     if [[ "$current_hour" -ge 23 || "$current_hour" -lt 9 ]]; then
         echo "Current time is between 23:00 and 09:00. Exiting the script."
-        exit 1  # Exit with a non-zero status to indicate an error or abnormal termination
+        exit 0
+    fi
+}
+
+exit_at_random() {
+    random_num=$((RANDOM % 10 + 1))
+
+    # Check if the random number is 1 (10% chance)
+    if [ "$random_num" -eq 1 ]; then
+        echo "Exiting script due to random chance."
+        exit 0
     fi
 }
 
@@ -80,6 +90,7 @@ delete_random_payload_file() {
 echo "$(date --utc +%Y-%m-%dT%H:%M:%SZ) -- Committing random BS to the commit farm"
 
 exit_if_time_during_sleeping_hours
+exit_at_random
 generate_random_commit_msg
 
 # Randomly choose between creating a new payload file or deleting an existing one
