@@ -16,7 +16,6 @@ exit_if_time_during_sleeping_hours() {
         echo "Current time is between 23:00 and 09:00. Exiting the script."
         exit 1  # Exit with a non-zero status to indicate an error or abnormal termination
     fi
-    echo "Current time is outside the range of 23:00 to 09:00. Continuing with the script."
 }
 
 generate_random_commit_msg() {
@@ -77,6 +76,8 @@ delete_random_payload_file() {
     rm "$random_file"
     echo "File '$random_file' deleted."
 }
+
+echo "$(date --utc +%Y-%m-%dT%H:%M:%SZ) -- Committing random BS to the commit farm"
 
 exit_if_time_during_sleeping_hours
 generate_random_commit_msg
