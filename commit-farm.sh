@@ -60,14 +60,17 @@ create_payload_file() {
         ((index++))
     done
 
+    # Amount of lines to generate, between 1 and 100
+    lines_to_generate=$((1 + RANDOM % 100))
+
     # Create the payload file and fill it with random text
     touch "$REPO_FOLDER/$filename"
-    for ((i = 0; i < 100; i++)); do
+    for ((i = 0; i < $lines_to_generate; i++)); do
         generate_random_text >> "$REPO_FOLDER/$filename"
         echo >> "$REPO_FOLDER/$filename"
     done
 
-    echo "File '$REPO_FOLDER/$filename' created with 100 lines of random text."
+    echo "File '$REPO_FOLDER/$filename' created with $lines_to_generate lines of random text."
 }
 
 delete_random_payload_file() {
