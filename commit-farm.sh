@@ -2,7 +2,7 @@
 
 # TO BE RUN VIA CRON
 
-ENVIRONMENT="PRODUCTION" # "DEVELOPMENT"
+ENVIRONMENT="DEVELOPMENT" # "DEVELOPMENT"
 REPO_NAME="commit-farming"
 REPO_FOLDER="/root/$REPO_NAME"
 
@@ -89,6 +89,7 @@ delete_random_payload_file() {
 
 echo "$(date --utc +%Y-%m-%dT%H:%M:%SZ) -- Committing random BS to the commit farm"
 
+git -C $REPO_FOLDER pull
 exit_if_time_during_sleeping_hours
 exit_at_random
 generate_random_commit_msg
