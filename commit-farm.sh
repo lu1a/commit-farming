@@ -11,9 +11,11 @@ RANDOM_COMMIT_MSG=""
 exit_if_time_during_sleeping_hours() {
     current_hour=$(date +%H)
     current_hour=$((10#$current_hour))
-    # Check if the current hour is between 23:00 and 09:00
-    if [[ "$current_hour" -ge 21 || "$current_hour" -lt 7 ]]; then
-        echo "Current time is between 23:00 and 09:00. Exiting the script."
+    day_of_week=$(date +%u)
+
+    # Check if the current hour is between 23:00 and 09:00, or if it's Sunday
+    if [[ "$current_hour" -ge 21 || "$current_hour" -lt 7 || "$day_of_week" -eq 7 ]]; then
+        echo "Current time is in my resting hours. Exiting the script."
         exit 0
     fi
 }
