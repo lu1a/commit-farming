@@ -21,9 +21,9 @@ exit_if_time_during_sleeping_hours() {
 }
 
 exit_at_random() {
-    random_num=$((RANDOM % 10 + 1))
+    random_num=$((RANDOM % 2 + 1))
 
-    # Check if the random number is 1 (10% chance)
+    # Check if the random number is 1 (50% chance)
     if [ "$random_num" -eq 1 ]; then
         echo "Exiting script due to random chance."
         exit 0
