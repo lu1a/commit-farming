@@ -21,11 +21,15 @@ exit_if_time_during_sleeping_hours() {
 }
 
 exit_at_random() {
-    random_num=$((RANDOM % 10 + 1))
-
-    # Check if the random number is less than or equal to 6 (60% chance)
-    if [ "$random_num" -le 6 ]; then
-        echo "Exiting script due to random chance."
+    # Get the current day of the week (1 = Monday, 7 = Sunday)
+    day_of_week=$(date +%u)
+    
+    # Calculate the random number range based on the day of the week
+    random_num=$((RANDOM % 7 + 1))
+    
+    # Check if the random number is less than or equal to the day of the week
+    if [ "$random_num" -le "$day_of_week" ]; then
+        echo "Exiting script due to random chance on day $day_of_week."
         exit 0
     fi
 }
