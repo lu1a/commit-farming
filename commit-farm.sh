@@ -101,7 +101,7 @@ echo "$(date --utc +%Y-%m-%dT%H:%M:%SZ) -- Committing random BS to the commit fa
 which bash
 git -C $REPO_FOLDER pull
 exit_if_time_during_sleeping_hours
-#exit_at_random
+exit_at_random
 generate_random_commit_msg
 
 # Randomly choose between creating a new payload file or deleting an existing one
