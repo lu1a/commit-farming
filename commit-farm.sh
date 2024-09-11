@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # TO BE RUN VIA CRON
 
@@ -98,7 +98,9 @@ delete_random_payload_file() {
 
 echo "$(date --utc +%Y-%m-%dT%H:%M:%SZ) -- Committing random BS to the commit farm"
 
-git -C $REPO_FOLDER config --get remote.origin.url
+which bash
+cd $REPO_FOLDER
+git pull
 git -C $REPO_FOLDER pull
 exit_if_time_during_sleeping_hours
 exit_at_random
