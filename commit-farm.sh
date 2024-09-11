@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # TO BE RUN VIA CRON
 
@@ -98,6 +98,7 @@ delete_random_payload_file() {
 
 echo "$(date --utc +%Y-%m-%dT%H:%M:%SZ) -- Committing random BS to the commit farm"
 
+git -C $REPO_FOLDER config --get remote.origin.url
 git -C $REPO_FOLDER pull
 exit_if_time_during_sleeping_hours
 exit_at_random
@@ -111,10 +112,8 @@ else
     delete_random_payload_file
 fi
 
-if [ "$ENVIRONMENT" == "PRODUCTION" ]; then
-    git -C $REPO_FOLDER add -A
-    git -C $REPO_FOLDER commit -a -m "$RANDOM_COMMIT_MSG"
-    git -C $REPO_FOLDER push
-else
-    echo "$random_commit_msg"
-fi
+git -C $REPO_FOLDER add -A
+git -C $REPO_FOLDER commit -a -m "$RANDOM_COMMIT_MSG"
+git -C $REPO_FOLDER push
+echo "$random_commit_msg"
+
