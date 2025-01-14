@@ -4,7 +4,7 @@
 
 ENVIRONMENT="PRODUCTION" # "DEVELOPMENT"
 REPO_NAME="commit-farming"
-REPO_FOLDER="/home/lewis/$REPO_NAME"
+REPO_FOLDER="/root/$REPO_NAME"
 
 RANDOM_COMMIT_MSG=""
 
@@ -96,7 +96,7 @@ delete_random_payload_file() {
     echo "File '$random_file' deleted."
 }
 
-echo "$(date --utc +%Y-%m-%dT%H:%M:%SZ) -- Committing random BS to the commit farm"
+echo "$(date +%Y-%m-%dT%H:%M:%SZ) -- Committing random BS to the commit farm"
 
 which bash
 git -C $REPO_FOLDER pull
