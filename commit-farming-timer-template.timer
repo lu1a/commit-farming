@@ -1,0 +1,12 @@
+[Unit]
+Description="Run commit-farming.service 5min after boot and some time every hour relative to activation time"
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=1h
+RandomizedDelaySec=3600
+OnCalendar=Mon..Fri *-*-* 10:00:*
+Unit=commit-farming.service
+
+[Install]
+WantedBy=multi-user.target

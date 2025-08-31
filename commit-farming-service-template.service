@@ -1,0 +1,5 @@
+[Unit]
+Description="Commit farming script"
+
+[Service]
+ExecStart=/root/commit-farming/commit-farming.sh

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# TO BE RUN VIA CRON
 
 ENVIRONMENT="PRODUCTION" # "DEVELOPMENT"
 REPO_NAME="commit-farming"
@@ -23,10 +22,10 @@ exit_if_time_during_sleeping_hours() {
 exit_at_random() {
     # Get the current day of the week (1 = Monday, 7 = Sunday)
     day_of_week=$(date +%u)
-    
+
     # Calculate the random number range based on the day of the week
     random_num=$((RANDOM % 7 + 1))
-    
+
     # Check if the random number is less than or equal to the day of the week
     if [ "$random_num" -le "$day_of_week" ]; then
         echo "Exiting script due to random chance on day $day_of_week."
@@ -47,7 +46,7 @@ generate_random_commit_msg() {
         echo "${array[random_index]}"
     }
 
-    # Generate a random English-like sentence
+    # Generate a pseudorandom English-like sentence
     RANDOM_COMMIT_MSG="$(pick_random_element "${git_actions[@]}") $(pick_random_element "${subjects[@]}") $(pick_random_element "${verbs[@]}") $(pick_random_element "${objects[@]}")"
 }
 
